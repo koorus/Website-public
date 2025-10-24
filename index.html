@@ -1,16 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>TempTransitionPage</title>
-<h3>Construction workers are at work...</h3>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Elevated Photo</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: #f5f5f5;
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    .photo-container {
+      background: black;
+      padding: 26px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .photo-container:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 16px 30px rgba(0, 0, 0, 0.25);
+    }
+
+    img {
+      display: block;
+      width: 300px;
+      height: auto;
+      border-radius: 8px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-top: 12px;
+      font-size: 1.2em;
+      color: #333;
+    }
+  </style>
+</head>
 <body>
 
-My site suddenly blew up due to db problem, it is being rebuilt, heavy equipment is on the way....
-
-
+  <div class="photo-container">
+ <img src="wave.jpg" alt="Sample Photo" />
+ <!   <img src="https://picsum.photos/400/250" alt="Sample Photo" />
+    <h2>Rebuilding, slowly...</h2>
+  </div>
 
 </body>
 </html>
