@@ -20,8 +20,8 @@
       padding: 0;
       border-radius: 8px;
       box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.4);
-      max-width: 70vw;  /* fit within viewport width */
-      max-height: 140vh; /* fit within viewport height */
+      max-width: 70vw;
+      max-height: 140vh;
       overflow: hidden;
       display: flex;
       justify-content: center;
@@ -34,7 +34,7 @@
       width: auto;
       height: 100%;
       border-radius: 8px;
-      object-fit: contain; /* ensures entire photo shows */
+      object-fit: contain;
     }
 
     h2 {
@@ -48,8 +48,24 @@
 <body>
 
   <div class="photo-container">
-    <img src="Oct2023-F33-Elora_138.jpg" alt="Sample Photo" />
+    <img id="random-photo" src="Oct2023-F33-Elora_138.jpg" alt="Sample Photo" />
   </div>
+
+  <script>
+    // List of your image filenames (relative paths)
+    const photos = [
+      "Oct2023-F33-Elora_138.jpg",
+      "FW2023-_D705043.jpg"
+          // Add as many as you like
+    ];
+
+    // Pick a random image
+    const randomIndex = Math.floor(Math.random() * photos.length);
+    const randomPhoto = photos[randomIndex];
+
+    // Update the image source
+    document.getElementById("random-photo").src = randomPhoto;
+  </script>
 
 </body>
 </html>
