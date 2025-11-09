@@ -13,6 +13,7 @@
       background: #808080;
       margin: 0;
       font-family: Arial, sans-serif;
+      gap: 20px; /* Space between buttons and image */
     }
 
     .photo-container {
@@ -51,43 +52,48 @@
       border-radius: 8px;
     }
 
+    /* Navigation buttons outside the image */
     .nav-button {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
       background-color: rgba(0, 0, 0, 0.4);
       color: white;
       border: none;
-      padding: 10px 15px;
-      font-size: 18px;
+      padding: 12px 18px;
+      font-size: 22px;
       border-radius: 50%;
       cursor: pointer;
       user-select: none;
       transition: background-color 0.3s;
+      height: 50px;
+      width: 50px;
     }
 
     .nav-button:hover {
       background-color: rgba(0, 0, 0, 0.7);
     }
 
-    .prev {
-      left: 10px;
-    }
-
-    .next {
-      right: 10px;
+    .nav-controls {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
     }
   </style>
 </head>
 <body>
 
-  <div class="photo-container">
+  <div class="nav-controls">
     <button class="nav-button prev">&#10094;</button>
-    <button class="nav-button next">&#10095;</button>
+  </div>
 
+  <div class="photo-container">
     <img class="slide active" src="Oct2023-F33-Elora_138.jpg" alt="Slide 1" />
     <img class="slide" src="2021-d850_D851921.jpg" alt="Slide 2" />
     <img class="slide" src="FW2023-_D705043.jpg" alt="Slide 3" />
+  </div>
+
+  <div class="nav-controls">
+    <button class="nav-button next">&#10095;</button>
   </div>
 
   <script>
