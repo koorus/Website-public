@@ -16,8 +16,8 @@
     }
 
     .photo-container {
+      position: relative;
       background: white;
-      padding: 0;
       border-radius: 8px;
       box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.4);
       max-width: 70vw;
@@ -28,44 +28,95 @@
       align-items: center;
     }
 
-    img {
-      max-width: 100%;
-      max-height: 100%;
-      width: auto;
+    .slide {
+      display: none;
+      width: 100%;
       height: 100%;
-      border-radius: 8px;
-      object-fit: contain;
     }
 
-    h2 {
-      text-align: center;
-      margin: 0;
-      font-size: 1.2em;
-      color: #333;
+    .slide.active {
+      display: block;
+      animation: fade 1s ease-in-out;
+    }
+
+    @keyframes fade {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    img {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      border-radius: 8px;
+    }
+
+    .nav-button {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: rgba(0, 0, 0, 0.4);
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      font-size: 18px;
+      border-radius: 50%;
+      cursor: pointer;
+      user-select: none;
+      transition: background-color 0.3s;
+    }
+
+    .nav-button:hover {
+      background-color: rgba(0, 0, 0, 0.7);
+    }
+
+    .prev {
+      left: 10px;
+    }
+
+    .next {
+      right: 10px;
     }
   </style>
 </head>
 <body>
 
   <div class="photo-container">
-    <img id="random-photo" src="Oct2023-F33-Elora_138.jpg" alt="Sample Photo" />
+    <button class="nav-button prev">&#10094;</button>
+    <button class="nav-button next">&#10095;</button>
+
+    <img class="slide active" src="Oct2023-F33-Elora_138.jpg" alt="Slide 1" />
+    <img class="slide" src="2021-d850_D851921.jpg" alt="Slide 2" />
+    <img class="slide" src="FW2023-_D705043.jpg" alt="Slide 3" />
   </div>
 
   <script>
-    // List of your image filenames (relative paths)
-    const photos = [
-      "Oct2023-F33-Elora_138.jpg",
-      "2021-d850_D851921.jpg",
-      "FW2023-_D705043.jpg"
-          // Add as many as you like
-    ];
+    const slides = document.querySelectorAll('.slide');
+    const prevBtn = document.querySelector('.prev');
+    const nextBtn = document.querySelector('.next');
+    let index = 0;
 
-    // Pick a random image
-    const randomIndex = Math.floor(Math.random() * photos.length);
-    const randomPhoto = photos[randomIndex];
+    function showSlide(i) {
+      slides.forEach((slide, idx) => {
+        slide.classList.toggle('active', idx === i);
+      });
+    }
 
-    // Update the image source
-    document.getElementById("random-photo").src = randomPhoto;
+    function nextSlide() {
+      index = (index + 1) % slides.length;
+      showSlide(index);
+    }
+
+    function prevSlide() {
+      index = (index - 1 + slides.length) % slides.length;
+      showSlide(index);
+    }
+
+    prevBtn.addEventListener('click', prevSlide);
+    nextBtn.addEventListener('click', nextSlide);
+
+    // Auto change every 5 seconds
+    setInterval(nextSlide, 5000);
   </script>
 
 </body>
