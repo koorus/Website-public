@@ -1,55 +1,189 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Koorus</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Koorus Bookan</title>
   <style>
     body {
       margin: 0;
-      padding: 0;
-      background: #ffffff;
+      background: #808080;
       font-family: Arial, sans-serif;
-      height: 100vh;
       display: flex;
+      height: 100vh;
     }
 
-    /* Left column */
-    .left-column {
-      width: 280px;
-      background: #f2f2f2;
-      padding: 20px;
-      box-sizing: border-box;
-      border-right: 1px solid #ddd;
+    /* Left index panel */
+    .index-panel {
+      width: 220px;
+      background: #2f2f2f;
+      color: white;
+      padding: 15px;
+      overflow-y: auto;
+      box-shadow: 4px 0 10px rgba(0,0,0,0.4);
     }
 
-    /* Right photo viewing panel */
-    .photo-panel {
+    .index-panel h2 {
+      margin-top: 0;
+      font-size: 18px;
+    }
+
+    .index-item {
+      padding: 8px;
+      margin: 5px 0;
+      background: #444;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s;
+      user-select: none;
+    }
+
+    .index-item:hover {
+      background: #666;
+    }
+
+    /* Right photo panel */
+    .main-panel {
       flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .photo-container {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.4);
+      max-width: 70%;
+      max-height: 80%;
+      overflow: hidden;
       display: flex;
       justify-content: center;
       align-items: center;
-      background: #ffffff;
+      position: relative;
     }
 
-    .photo-panel img {
-      max-width: 95%;
-      max-height: 95%;
+    .slide {
+      display: none;
+      width: 100%;
+    }
+
+    .slide.active {
+      display: block;
+      animation: fade 3s ease-in-out;
+    }
+
+    @keyframes fade {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    img {
+      width: 100%;
       object-fit: contain;
-      border-radius: 10px;
+      border-radius: 8px;
+    }
+
+    .nav-controls {
+      margin-top: 15px;
+      display: flex;
+      gap: 20px;
+    }
+
+    .nav-button {
+      background-color: rgba(0, 0, 0, 0.5);
+      color: lightgray;
+      border: none;
+      padding: 6px 12px;
+      font-size: 14px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .nav-button:hover {
+      background-color: rgba(0, 0, 0, 0.8);
     }
   </style>
 </head>
+
 <body>
 
-  <div class="left-column">
-    <h2>Left Column</h2>
-    <p>Menu or text goes here.</p>
+  <!-- LEFT INDEX PANEL -->
+  <div class="index-panel">
+    <h2>Photo Index</h2>
+
+    <div class="index-item" data-index="0">Slide 1</div>
+    <div class="index-item" data-index="1">Slide 2</div>
+    <div class="index-item" data-index="2">Slide 3</div>
+    <div class="index-item" data-index="3">Slide 4</div>
+    <div class="index-item" data-index="4">Slide 5</div>
+    <div class="index-item" data-index="5">Slide 6</div>
+    <div class="index-item" data-index="6">Slide 7</div>
+    <div class="index-item" data-index="7">Slide 8</div>
+
   </div>
 
-  <div class="photo-panel">
-    <img src="https://via.placeholder.com/800x600" alt="Sample Photo">
+  <!-- RIGHT PHOTO VIEWING PANEL -->
+  <div class="main-panel">
+
+    <div class="photo-container">
+      <img class="slide active" src="Oct2023-F33-Elora_138.jpg" alt="Slide 1" />
+      <img class="slide" src="2021-d850_D851921.jpg" alt="Slide 2" />
+      <img class="slide" src="FW2023-_D705043.jpg" alt="Slide 3" />
+      <img class="slide" src="Oct2022-BW-F31gorge-laurel_93.jpg" alt="Slide 4" />
+      <img class="slide" src="FW2024_D853644.jpg" alt="Slide 5" />
+      <img class="slide" src="FW2024_D853646.jpg" alt="Slide 6" />
+      <img class="slide" src="F2018-2_DSC0243.jpg" alt="Slide 7" />
+      <img class="slide" src="WS2021_D703509.jpg" alt="Slide 8" />
+    </div>
+
+    <div class="nav-controls">
+      <button class="nav-button prev">&#10094; Prev</button>
+      <button class="nav-button next">Next &#10095;</button>
+    </div>
+
   </div>
+
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    const indexButtons = document.querySelectorAll('.index-item');
+    const prevBtn = document.querySelector('.prev');
+    const nextBtn = document.querySelector('.next');
+
+    let index = 0;
+
+    function showSlide(i) {
+      index = i;
+      slides.forEach((slide, idx) => {
+        slide.classList.toggle('active', idx === i);
+      });
+    }
+
+    indexButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const i = parseInt(btn.dataset.index);
+        showSlide(i);
+      });
+    });
+
+    function nextSlide() {
+      index = (index + 1) % slides.length;
+      showSlide(index);
+    }
+
+    function prevSlide() {
+      index = (index - 1 + slides.length) % slides.length;
+      showSlide(index);
+    }
+
+    prevBtn.addEventListener('click', prevSlide);
+    nextBtn.addEventListener('click', nextSlide);
+
+    // Auto change every 10 seconds
+    setInterval(nextSlide, 10000);
+  </script>
 
 </body>
 </html>
