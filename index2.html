@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Two Column Layout with Photo Viewer</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #ffffff;
+      font-family: Arial, sans-serif;
+      height: 100vh;
+      display: flex;
+    }
+
+    /* Left column */
+    .left-column {
+      width: 280px;
+      background: #f2f2f2;
+      padding: 20px;
+      box-sizing: border-box;
+      border-right: 1px solid #ddd;
+    }
+
+    /* Right photo viewing panel */
+    .photo-panel {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #ffffff;
+    }
+
+    .photo-panel img {
+      max-width: 95%;
+      max-height: 95%;
+      object-fit: contain;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="left-column">
+    <h2>Left Column</h2>
+    <p>Menu or text goes here.</p>
+  </div>
+
+  <div class="photo-panel">
+    <img src="https://via.placeholder.com/800x600" alt="Sample Photo">
+  </div>
+
+</body>
+</html>
