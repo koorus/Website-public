@@ -3,244 +3,104 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Koorus — Index + Page Viewer</title>
+  <title>Koorus</title>
   <style>
-    :root {
-      --left-width: 240px;
-      --bg: #808080;
-      --left-bg: #2f2f2f;
-      --left-item: #444;
-      --left-item-hover: #666;
-      --accent: #1e90ff;
-    }
-
-    html, body {
-      height: 100%;
+    body {
       margin: 0;
+      background: #808080;
       font-family: Arial, sans-serif;
-      background: var(--bg);
-    }
-
-    /* container keeps things horizontal and prevents wrapping */
-    .app {
       display: flex;
+      flex-direction: row;
       height: 100vh;
-      min-height: 400px;
-      gap: 0;
-      /* prevent the panels from stacking */
-      flex-wrap: nowrap;
     }
 
-    /* LEFT index panel (fixed width) */
+    /* Left index panel */
     .index-panel {
-      width: var(--left-width);
-      min-width: var(--left-width);
-      max-width: var(--left-width);
-      background: var(--left-bg);
+      width: 220px;
+      background: #2f2f2f;
       color: white;
-      padding: 16px;
-      box-sizing: border-box;
+      padding: 15px;
       overflow-y: auto;
-      box-shadow: 4px 0 10px rgba(0,0,0,0.45);
+      box-shadow: 4px 0 10px rgba(0,0,0,0.4);
     }
 
     .index-panel h2 {
-      margin: 0 0 12px 0;
-      font-size: 16px;
-      letter-spacing: 0.3px;
-    }
-
-    .index-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
+      margin-top: 0;
+      font-size: 18px;
     }
 
     .index-item {
-      padding: 10px 12px;
-      margin: 6px 0;
-      background: var(--left-item);
-      border-radius: 8px;
+      padding: 8px;
+      margin: 5px 0;
+      background: #444;
+      border-radius: 6px;
       cursor: pointer;
-      transition: background 180ms, transform 120ms;
+      transition: background 0.3s;
       user-select: none;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 14px;
     }
 
     .index-item:hover {
-      background: var(--left-item-hover);
-      transform: translateX(2px);
+      background: #666;
     }
 
-    .index-item.active {
-      background: linear-gradient(90deg, rgba(30,144,255,0.12), rgba(30,144,255,0.02));
-      outline: 2px solid rgba(30,144,255,0.12);
-      color: var(--accent);
-    }
-
-    .index-item .dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.2);
-    }
-
-    .index-item.active .dot {
-      background: var(--accent);
-      box-shadow: 0 0 6px rgba(30,144,255,0.25);
-    }
-
-    /* RIGHT content panel (flexible) */
-    .content-panel {
+    /* Right dynamic content panel */
+    .main-panel {
       flex: 1;
-      min-width: 0; /* important so iframe can shrink */
-      display: flex;
-      flex-direction: column;
+      padding: 20px;
       background: #ffffff;
-      box-sizing: border-box;
-      overflow: hidden;
+      overflow-y: auto;
+      border-left: 2px solid #222;
     }
 
-    /* header inside right panel (optional) */
-    .content-header {
-      padding: 12px 16px;
-      border-bottom: 1px solid #eee;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      background: #fafafa;
-    }
-
-    .content-header h3 {
-      margin: 0;
-      font-size: 15px;
+    .loading {
       color: #333;
-    }
-
-    /* iframe container fills available space */
-    .iframe-wrap {
-      flex: 1;
-      min-height: 0; /* critical for proper scrolling inside the iframe container */
-      position: relative;
-      background: #ddd;
-    }
-
-    iframe.page-frame {
-      border: 0;
-      width: 100%;
-      height: 100%;
-      display: block;
-    }
-
-    /* loading overlay */
-    .loading-overlay {
-      position: absolute;
-      inset: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      pointer-events: none;
-      font-size: 14px;
-      color: #333;
-      opacity: 0.9;
-      background: transparent;
-    }
-
-    /* Responsive: keep left panel but allow smaller screens */
-    @media (max-width: 640px) {
-      .index-panel {
-        width: 180px;
-        min-width: 140px;
-      }
+      font-size: 18px;
+      padding: 20px;
     }
   </style>
 </head>
+
 <body>
-  <div class="app">
-    <!-- LEFT INDEX -->
-    <nav class="index-panel" aria-label="Pages index">
-      <h2>Pages</h2>
-      <ul class="index-list" id="indexList">
-        <!-- Add items: data-src must be the page URL (relative or absolute) -->
-        <li class="index-item active" data-src="index.html"><span class="dot"></span> Ancient people</li>
-        <li class="index-item" data-src="page2.html"><span class="dot"></span> Page 2</li>
-        <li class="index-item" data-src="page3.html"><span class="dot"></span> Page 3</li>
-        <li class="index-item" data-src="page4.html"><span class="dot"></span> Page 4</li>
-        <!-- add more items as needed -->
-      </ul>
-    </nav>
 
-    <!-- RIGHT CONTENT -->
-    <main class="content-panel">
-      <div class="content-header">
-        <h3 id="pageTitle">Welcome — select a page</h3>
-      </div>
+  <!-- LEFT INDEX PANEL -->
+  <div class="index-panel">
+    <h2>HTML Pages</h2>
 
-      <div class="iframe-wrap" id="iframeWrap">
-        <!-- iframe isolates page CSS/JS so it won't move the left panel -->
-        <iframe id="pageFrame" class="page-frame" src="page1.html" sandbox="allow-same-origin allow-scripts allow-forms"></iframe>
-
-        <!-- simple loading text (we toggle visibility from JS) -->
-        <div id="loading" class="loading-overlay" style="display:none;">
-          Loading...
-        </div>
-      </div>
-    </main>
+    <!-- Add your HTML page entries here -->
+    <div class="index-item" data-page="index.html">Ancient people</div>
+    <div class="index-item" data-page="page2.html">Page 2</div>
+    <div class="index-item" data-page="page3.html">Page 3</div>
+    <div class="index-item" data-page="page4.html">Page 4</div>
   </div>
 
+  <!-- RIGHT CONTENT VIEWING PANEL -->
+  <div class="main-panel" id="content-area">
+  
+</div>
+
   <script>
-    (function () {
-      const indexList = document.getElementById('indexList');
-      const items = indexList.querySelectorAll('.index-item');
-      const iframe = document.getElementById('pageFrame');
-      const loading = document.getElementById('loading');
-      const pageTitle = document.getElementById('pageTitle');
+    const items = document.querySelectorAll('.index-item');
+    const contentArea = document.getElementById('content-area');
 
-      // Helper: set active class on selected index
-      function setActive(selected) {
-        items.forEach(it => it.classList.toggle('active', it === selected));
-      }
+    function loadPage(page) {
+      contentArea.innerHTML = `<div class='loading'>Loading ${page}...</div>`;
 
-      // Load page into iframe (shows loading overlay)
-      function loadIntoIframe(url, label) {
-        loading.style.display = 'flex';
-        pageTitle.textContent = label || url;
-        // Setting src will start loading; we listen for load event to hide overlay
-        iframe.src = url;
-
-        // hide overlay after iframe finishes loading
-        iframe.onload = function () {
-          // small timeout for smoother UX if needed
-          setTimeout(() => {
-            loading.style.display = 'none';
-          }, 150);
-        };
-
-        // if iframe can't load (e.g., 404) the onload still fires for some browsers;
-        // you can implement messaging within the loaded page to postMessage errors if needed.
-      }
-
-      // Wire up clicks
-      items.forEach(item => {
-        item.addEventListener('click', () => {
-          const src = item.dataset.src;
-          const label = item.textContent.trim();
-          setActive(item);
-          loadIntoIframe(src, label);
+      fetch(page)
+        .then(response => response.text())
+        .then(html => {
+          contentArea.innerHTML = html;
+        })
+        .catch(() => {
+          contentArea.innerHTML = `<p style='color:red;'>Error loading ${page}</p>`;
         });
-      });
+    }
 
-      // initial state: first item loaded by default (already set in iframe src)
-      // Ensure active class matches:
-      setActive(items[0]);
-      pageTitle.textContent = items[0].textContent.trim();
-      // show loading briefly on initial load
-      loading.style.display = 'flex';
-      iframe.onload = () => loading.style.display = 'none';
-    })();
+    items.forEach(item => {
+      item.addEventListener('click', () => {
+        loadPage(item.dataset.page);
+      });
+    });
   </script>
+
 </body>
 </html>
