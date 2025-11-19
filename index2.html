@@ -42,68 +42,19 @@
       background: #666;
     }
 
-    /* Right photo panel */
+    /* Right dynamic content panel */
     .main-panel {
       flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
       padding: 20px;
+      background: #ffffff;
+      overflow-y: auto;
+      border-left: 2px solid #222;
     }
 
-    .photo-container {
-      background: white;
-      border-radius: 8px;
-      box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.4);
-      max-width: 70%;
-      max-height: 80%;
-      overflow: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-    }
-
-    .slide {
-      display: none;
-      width: 100%;
-    }
-
-    .slide.active {
-      display: block;
-      animation: fade 3s ease-in-out;
-    }
-
-    @keyframes fade {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    img {
-      width: 100%;
-      object-fit: contain;
-      border-radius: 8px;
-    }
-
-    .nav-controls {
-      margin-top: 15px;
-      display: flex;
-      gap: 20px;
-    }
-
-    .nav-button {
-      background-color: rgba(0, 0, 0, 0.5);
-      color: lightgray;
-      border: none;
-      padding: 6px 12px;
-      font-size: 14px;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    .nav-button:hover {
-      background-color: rgba(0, 0, 0, 0.8);
+    .loading {
+      color: #333;
+      font-size: 18px;
+      padding: 20px;
     }
   </style>
 </head>
@@ -112,77 +63,43 @@
 
   <!-- LEFT INDEX PANEL -->
   <div class="index-panel">
-    <h2>Photo Index</h2>
+    <h2>HTML Pages</h2>
 
-    <div class="index-item" data-index="0">Slide 1</div>
-    <div class="index-item" data-index="1">Slide 2</div>
-    <div class="index-item" data-index="2">Slide 3</div>
-    <div class="index-item" data-index="3">Slide 4</div>
-    <div class="index-item" data-index="4">Slide 5</div>
-    <div class="index-item" data-index="5">Slide 6</div>
-    <div class="index-item" data-index="6">Slide 7</div>
-    <div class="index-item" data-index="7">Slide 8</div>
-
+    <!-- Add your HTML page entries here -->
+    <div class="index-item" data-page="page1.html">Page 1</div>
+    <div class="index-item" data-page="page2.html">Page 2</div>
+    <div class="index-item" data-page="page3.html">Page 3</div>
+    <div class="index-item" data-page="page4.html">Page 4</div>
   </div>
 
-  <!-- RIGHT PHOTO VIEWING PANEL -->
-  <div class="main-panel">
-
-    <div class="photo-container">
-      <img class="slide active" src="Oct2023-F33-Elora_138.jpg" alt="Slide 1" />
-      <img class="slide" src="2021-d850_D851921.jpg" alt="Slide 2" />
-      <img class="slide" src="FW2023-_D705043.jpg" alt="Slide 3" />
-      <img class="slide" src="Oct2022-BW-F31gorge-laurel_93.jpg" alt="Slide 4" />
-      <img class="slide" src="FW2024_D853644.jpg" alt="Slide 5" />
-      <img class="slide" src="FW2024_D853646.jpg" alt="Slide 6" />
-      <img class="slide" src="F2018-2_DSC0243.jpg" alt="Slide 7" />
-      <img class="slide" src="WS2021_D703509.jpg" alt="Slide 8" />
-    </div>
-
-    <div class="nav-controls">
-      <button class="nav-button prev">&#10094; Prev</button>
-      <button class="nav-button next">Next &#10095;</button>
-    </div>
-
+  <!-- RIGHT CONTENT VIEWING PANEL -->
+  <div class="main-panel" id="content-area">
+    <h2>Welcome</h2>
+    <p>Select a page from the left menu to load it here.</p>
   </div>
 
   <script>
-    const slides = document.querySelectorAll('.slide');
-    const indexButtons = document.querySelectorAll('.index-item');
-    const prevBtn = document.querySelector('.prev');
-    const nextBtn = document.querySelector('.next');
+    const items = document.querySelectorAll('.index-item');
+    const contentArea = document.getElementById('content-area');
 
-    let index = 0;
+    function loadPage(page) {
+      contentArea.innerHTML = `<div class='loading'>Loading ${page}...</div>`;
 
-    function showSlide(i) {
-      index = i;
-      slides.forEach((slide, idx) => {
-        slide.classList.toggle('active', idx === i);
-      });
+      fetch(page)
+        .then(response => response.text())
+        .then(html => {
+          contentArea.innerHTML = html;
+        })
+        .catch(() => {
+          contentArea.innerHTML = `<p style='color:red;'>Error loading ${page}</p>`;
+        });
     }
 
-    indexButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const i = parseInt(btn.dataset.index);
-        showSlide(i);
+    items.forEach(item => {
+      item.addEventListener('click', () => {
+        loadPage(item.dataset.page);
       });
     });
-
-    function nextSlide() {
-      index = (index + 1) % slides.length;
-      showSlide(index);
-    }
-
-    function prevSlide() {
-      index = (index - 1 + slides.length) % slides.length;
-      showSlide(index);
-    }
-
-    prevBtn.addEventListener('click', prevSlide);
-    nextBtn.addEventListener('click', nextSlide);
-
-    // Auto change every 10 seconds
-    setInterval(nextSlide, 10000);
   </script>
 
 </body>
