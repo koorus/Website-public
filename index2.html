@@ -10,8 +10,8 @@
       background: #808080;
       font-family: Arial, sans-serif;
       display: flex;
-      flex-direction: row;
       height: 100vh;
+      overflow: hidden;
     }
 
     /* Left index panel */
@@ -43,19 +43,20 @@
       background: #666;
     }
 
-    /* Right dynamic content panel */
+    /* Right side where pages load */
     .main-panel {
       flex: 1;
-      padding: 20px;
-      background: #ffffff;
-      overflow-y: auto;
+      background: white;
       border-left: 2px solid #222;
+      overflow: hidden;
+      position: relative;
     }
 
-    .loading {
-      color: #333;
-      font-size: 18px;
-      padding: 20px;
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      background: white;
     }
   </style>
 </head>
@@ -66,41 +67,20 @@
   <div class="index-panel">
     <h2>HTML Pages</h2>
 
-    <!-- Add your HTML page entries here -->
     <div class="index-item" data-page="index.html">Ancient people</div>
     <div class="index-item" data-page="page2.html">Page 2</div>
     <div class="index-item" data-page="page3.html">Page 3</div>
     <div class="index-item" data-page="page4.html">Page 4</div>
   </div>
 
-  <!-- RIGHT CONTENT VIEWING PANEL -->
-  <div class="main-panel" id="content-area">
-  
-</div>
+  <!-- RIGHT PANEL -->
+  <div class="main-panel">
+    <iframe id="viewer"></iframe>
+  </div>
 
   <script>
-    const items = document.querySelectorAll('.index-item');
-    const contentArea = document.getElementById('content-area');
+    const viewer = document.getElementById("viewer");
 
-    function loadPage(page) {
-      contentArea.innerHTML = `<div class='loading'>Loading ${page}...</div>`;
-
-      fetch(page)
-        .then(response => response.text())
-        .then(html => {
-          contentArea.innerHTML = html;
-        })
-        .catch(() => {
-          contentArea.innerHTML = `<p style='color:red;'>Error loading ${page}</p>`;
-        });
-    }
-
-    items.forEach(item => {
-      item.addEventListener('click', () => {
-        loadPage(item.dataset.page);
-      });
-    });
-  </script>
-
-</body>
-</html>
+    document.querySelectorAll(".index-item").forEach(item => {
+      item.addEventListener("click", () => {
+        viewer.src
