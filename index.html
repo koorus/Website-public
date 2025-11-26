@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Koorus Bookan</title>
   <style>
     body {
@@ -14,7 +14,7 @@
       overflow: hidden;
     }
 
-    /* Left index panel */
+    /* LEFT INDEX PANEL */
     .index-panel {
       width: 220px;
       background: #2f2f2f;
@@ -22,13 +22,9 @@
       padding: 15px;
       overflow-y: auto;
       box-shadow: 4px 0 10px rgba(0,0,0,0.4);
-     }
-
-    .index-panel h2 {
-      margin-top: 0;
-      font-size: 18px;
     }
 
+    .index-panel h2 { margin-top: 0; font-size: 18px; }
     .index-item {
       padding: 8px;
       margin: 5px 0;
@@ -38,13 +34,9 @@
       transition: background 0.3s;
       user-select: none;
     }
+    .index-item:hover { background: #666; }
 
-   
-    .index-item:hover {
-      background: #666;
-    }
-
-    /* Right dynamic content panel */
+    /* RIGHT DYNAMIC CONTENT PANEL */
     .main-panel {
       flex: 1;
       background: white;
@@ -52,68 +44,101 @@
       position: relative;
       overflow: hidden;
     }
-.cover-photo {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: url("wave.jpg"); /* ← change this */
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  z-index: 0;
-  opacity: 1;
-}
 
-iframe {
-  position: relative;
-  z-index: 1;
-  background: transparent;
-}
-    
- iframe {
+    /* COVER PHOTO (visible initially) */
+    .cover-photo {
+      position: absolute;
+      inset: 0; /* top:0;right:0;bottom:0;left:0; */
+      background-image: url("wave.jpg"); /* ← make sure this file exists in same folder or give correct path */
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      z-index: 0;
+      opacity: 1;
+      transition: opacity 400ms ease;
+      pointer-events: none; /* allow clicks to pass to overlaying elements if any */
+    }
+
+    /* faded/hidden state (used after loading a page) */
+    .cover-photo.hidden {
+      opacity: 0;
+    }
+
+    /* IFRAME — hidden initially, shown when a page is loaded */
+    iframe#viewer {
+      position: relative;
+      z-index: 1;
       width: 100%;
       height: 100%;
       border: none;
-      background: white;
+      background: transparent; /* let iframe document control its own background */
+      display: none; /* hide while no src is set */
     }
   </style>
 </head>
-
 <body>
 
   <!-- LEFT INDEX PANEL -->
   <div class="index-panel">
     <h2>The collections</h2>
-<br><br>
     <div class="index-item" data-page="enduring.html">Enduring creatures</div>
     <div class="index-item" data-page="ordinary.html">Joy of ordinary</div>
-    
-<!--    <div class="index-item" data-page="page3.html">Page 3</div>
-    <div class="index-item" data-page="page4.html">Page 4</div> -->
-    
-    <br><br> <br><br> <br><br> <br><br><br><br> <br><br> <br><br> <br><br> <br><br> <br><br><br><br> <br><br>
-    
-    <img class="slide" src="koorusbookanNameSmall.png" width=100% alt="Koorus Bookan" />
-<!--    <img class="slide" src="kb_email_pic.png" width=125% alt="email pic" />    -->
+
+    <br><br>
+    <img class="slide" src="koorusbookanNameSmall.png" width="100%" alt="Koorus Bookan" />
   </div>
 
-  <!-- RIGHT CONTENT PANEL (iframe) -->
+  <!-- RIGHT CONTENT PANEL -->
   <div class="main-panel">
-  <div class="cover-photo"></div>   
-  <iframe id="viewer" src=""></iframe>
-    
+    <div class="cover-photo" id="cover"></div>
+    <iframe id="viewer" src=""></iframe>
   </div>
 
   <script>
-    const viewer = document.getElementById("viewer");
+    const viewer = document.getElementById('viewer');
+    const cover = document.getElementById('cover');
 
-    document.querySelectorAll(".index-item").forEach(item => {
-      item.addEventListener("click", () => {
-        viewer.src = item.dataset.page;
+    // Hide iframe initially if it has no src (keeps cover visible)
+    function updateVisibility() {
+      if (!viewer.src || viewer.src === window.location.href) { // some browsers set empty src to current URL
+        viewer.style.display = 'none';
+        cover.classList.remove('hidden');
+      } else {
+        viewer.style.display = 'block';
+        // keep cover fading out so iframe content appears above it
+        cover.classList.add('hidden');
+      }
+    }
+
+    // load page and fade cover
+    function loadPage(url) {
+      // show iframe element (so it will render once src is set)
+      viewer.style.display = 'block';
+      // start fading cover immediately for a smoother transition
+      cover.classList.add('hidden');
+      // set src (this triggers load in iframe)
+      viewer.src = url;
+    }
+
+    // wire up clicks
+    document.querySelectorAll('.index-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const page = item.dataset.page;
+        if (!page) return;
+        loadPage(page);
       });
     });
+
+    // when iframe finishes loading, ensure cover stays hidden and iframe visible
+    viewer.addEventListener('load', () => {
+      viewer.style.display = 'block';
+      cover.classList.add('hidden');
+    });
+
+    // initialize
+    document.addEventListener('DOMContentLoaded', updateVisibility);
+    // in case the page is loaded with an explicit src already set
+    updateVisibility();
   </script>
 
 </body>
