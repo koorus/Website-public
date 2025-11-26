@@ -91,6 +91,44 @@
       background: transparent; /* let iframe document control its own background */
       display: none; /* hide while no src is set */
     }
+/* ----------- MOBILE FIX ----------- */
+@media (max-width: 768px) {
+
+  body {
+    flex-direction: column;    /* left panel on top, content below */
+    height: auto;
+    overflow: auto;
+  }
+
+  .index-panel {
+    width: 100%;
+    height: auto;
+    box-shadow: none;
+  }
+
+  .main-panel {
+    width: 100%;
+    height: calc(100vh - 300px); /* adjust depending on menu height */
+    position: relative;
+  }
+
+  /* Make cover photo responsive */
+  .cover-photo {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 720 / 504;
+    top: 0;
+    left: 0;
+    transform: none;
+    position: relative;
+  }
+
+  iframe#viewer {
+    height: 100%;
+  }
+}
+
+    
   </style>
 </head>
 <body>
