@@ -45,20 +45,20 @@
       overflow: hidden;
     }
 
-  /* COVER PHOTO (visible initially) */
+/* COVER PHOTO (centered in the right panel) */
 .cover-photo {
   position: absolute;
-
-  /* Position of the photo inside the right panel */
-  top: 100px;      /* distance from top */
-  left: 200px;     /* distance from left */
+  top: 50%;
+  left: 50%;
 
   /* Fixed dimensions */
-  width: 500px;   /* choose the size you want */
-  height: 350px;  /* choose the size you want */
+  width: 500px;
+  height: 350px;
+
+  transform: translate(-50%, -50%); /* perfect centering */
 
   background-image: url("laurelC.jpg");
-  background-size: cover;       /* keeps proportions */
+  background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 
