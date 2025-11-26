@@ -45,19 +45,28 @@
       overflow: hidden;
     }
 
-    /* COVER PHOTO (visible initially) */
-    .cover-photo {
-      position: absolute;
-      inset: 0; /* top:0;right:0;bottom:0;left:0; */
-      background-image: url("laurelC.jpg"); /* ← make sure this file exists in same folder or give correct path */
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      z-index: 0;
-      opacity: 1;
-      transition: opacity 4000ms ease;
-      pointer-events: none; /* allow clicks to pass to overlaying elements if any */
-    }
+  /* COVER PHOTO (visible initially) */
+.cover-photo {
+  position: absolute;
+
+  /* Position of the photo inside the right panel */
+  top: 40px;      /* distance from top */
+  left: 40px;     /* distance from left */
+
+  /* Fixed dimensions */
+  width: 500px;   /* choose the size you want */
+  height: 350px;  /* choose the size you want */
+
+  background-image: url("laurelC.jpg");
+  background-size: cover;       /* keeps proportions */
+  background-position: center;
+  background-repeat: no-repeat;
+
+  z-index: 0;
+  opacity: 1;
+  transition: opacity 400ms ease;
+  pointer-events: none;
+}
 
     /* faded/hidden state (used after loading a page) */
     .cover-photo.hidden {
