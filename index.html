@@ -14,6 +14,10 @@
       overflow: hidden;
     }
 
+.bottom-logo {
+  margin-top: auto;  /* pushes it to the bottom */
+}
+    
     /* LEFT INDEX PANEL */
     .index-panel {
       width: 220px;
@@ -22,6 +26,9 @@
       padding: 15px;
       overflow-y: auto;
       box-shadow: 4px 0 10px rgba(0,0,0,0.4);
+
+      display: flex;
+      flex-direction: column;
     }
 
     .index-panel h2 { margin-top: 0; font-size: 18px; }
@@ -95,7 +102,7 @@
     <div class="index-item" data-page="ordinary.html">Joy of ordinary</div>
 
     <br><br>
-    <img class="slide" src="koorusbookanNameSmall.png" width="100%" alt="Koorus Bookan" />
+    <img class="slide bottom-logo" src="koorusbookanNameSmall.png" width="100%" alt="Koorus Bookan" />
   </div>
 
   <!-- RIGHT CONTENT PANEL -->
