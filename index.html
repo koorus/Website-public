@@ -27,10 +27,7 @@
       flex-direction: column;
     }
 
-    .index-panel h2 {
-      margin-top: 0;
-      font-size: 18px;
-    }
+    .index-panel h2 { margin-top: 0; font-size: 18px; }
 
     .index-item {
       padding: 8px;
@@ -42,11 +39,9 @@
       user-select: none;
     }
 
-    .index-item:hover {
-      background: #666;
-    }
+    .index-item:hover { background: #666; }
 
-    /* RIGHT CONTENT PANEL */
+    /* RIGHT PANEL */
     .main-panel {
       flex: 1;
       background: white;
@@ -60,17 +55,13 @@
       position: absolute;
       top: 50%;
       left: 50%;
-
-      /* Fixed original dimensions */
       width: 720px;
       height: 504px;
-
       transform: translate(-50%, -50%);
       background-image: url("laurelC.jpg");
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
-
       opacity: 1;
       z-index: 0;
       pointer-events: none;
@@ -81,9 +72,7 @@
       min-height: 1px;
     }
 
-    .cover-photo.hidden {
-      opacity: 0;
-    }
+    .cover-photo.hidden { opacity: 0; }
 
     /* IFRAME */
     iframe#viewer {
@@ -93,14 +82,10 @@
       height: 100%;
       border: none;
       background: transparent;
-      display: none; /* starts hidden */
+      display: none;
     }
 
-
-
-    /* ----------------------------------------------------------- */
-    /* ----------------------- MOBILE FIX ------------------------ */
-    /* ----------------------------------------------------------- */
+    /* ----------- MOBILE FIX (hidden cover photo) ----------- */
     @media (max-width: 768px) {
 
       body {
@@ -118,23 +103,15 @@
       .main-panel {
         width: 100%;
         height: auto;
-        position: relative;
         overflow: hidden;
-      }
-
-      /* Responsive cover */
-      .cover-photo {
-        width: 100%;
-        height: auto;
-        aspect-ratio: 720 / 504;
-
         position: relative;
-        top: 0;
-        left: 0;
-        transform: none;
       }
 
-      /* Responsive iframe */
+      /* HIDE COVER PHOTO ON MOBILE */
+      .cover-photo {
+        display: none !important;
+      }
+
       iframe#viewer {
         width: 100%;
         height: calc(100vh - 250px);
@@ -148,7 +125,6 @@
 
 <body>
 
-  <!-- LEFT MENU PANEL -->
   <div class="index-panel">
     <h2>The collections</h2>
 
@@ -156,34 +132,37 @@
     <div class="index-item" data-page="ordinary.html">Joy of ordinary</div>
 
     <br><br>
-    <img class="slide bottom-logo" src="koorusbookanNameSmall.png" width="100%" alt="Koorus Bookan">
+    <img class="slide bottom-logo" src="koorusbookanNameSmall.png" width="100%" alt="Koorus Bookan" />
   </div>
 
-
-  <!-- RIGHT MAIN CONTENT PANEL -->
   <div class="main-panel">
     <div class="cover-photo" id="cover"></div>
     <iframe id="viewer"></iframe>
   </div>
 
-
   <script>
     const viewer = document.getElementById('viewer');
     const cover = document.getElementById('cover');
 
+    /* OPTIONAL — JS mobile detection & cover removal */
+    const isMobile = /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(navigator.userAgent);
+    if (isMobile && cover) {
+      cover.remove();   // PROPERLY REMOVE if mobile
+    }
+
     function updateVisibility() {
       if (!viewer.src || viewer.src === window.location.href) {
         viewer.style.display = 'none';
-        cover.classList.remove('hidden');
+        if (cover) cover.classList.remove('hidden');
       } else {
         viewer.style.display = 'block';
-        cover.classList.add('hidden');
+        if (cover) cover.classList.add('hidden');
       }
     }
 
     function loadPage(url) {
       viewer.style.display = 'block';
-      cover.classList.add('hidden');
+      if (cover) cover.classList.add('hidden');
       viewer.src = url;
     }
 
@@ -195,7 +174,7 @@
 
     viewer.addEventListener('load', () => {
       viewer.style.display = 'block';
-      cover.classList.add('hidden');
+      if (cover) cover.classList.add('hidden');
     });
 
     document.addEventListener('DOMContentLoaded', updateVisibility);
