@@ -4,6 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Koorus Bookan</title>
+
   <style>
     body {
       margin: 0;
@@ -14,10 +15,6 @@
       overflow: hidden;
     }
 
-.bottom-logo {
-  margin-top: auto;  /* pushes it to the bottom */
-}
-    
     /* LEFT INDEX PANEL */
     .index-panel {
       width: 220px;
@@ -26,12 +23,15 @@
       padding: 15px;
       overflow-y: auto;
       box-shadow: 4px 0 10px rgba(0,0,0,0.4);
-
       display: flex;
       flex-direction: column;
     }
 
-    .index-panel h2 { margin-top: 0; font-size: 18px; }
+    .index-panel h2 {
+      margin-top: 0;
+      font-size: 18px;
+    }
+
     .index-item {
       padding: 8px;
       margin: 5px 0;
@@ -41,9 +41,12 @@
       transition: background 0.3s;
       user-select: none;
     }
-    .index-item:hover { background: #666; }
 
-    /* RIGHT DYNAMIC CONTENT PANEL */
+    .index-item:hover {
+      background: #666;
+    }
+
+    /* RIGHT CONTENT PANEL */
     .main-panel {
       flex: 1;
       background: white;
@@ -52,152 +55,150 @@
       overflow: hidden;
     }
 
-/* COVER PHOTO (centered in the right panel) */
-.cover-photo {
-  position: absolute;
-  top: 50%;
-  left: 50%;
+    /* COVER PHOTO */
+    .cover-photo {
+      position: absolute;
+      top: 50%;
+      left: 50%;
 
-  display: block;
-  min-width: 1px;
-  min-height: 1px;
+      /* Fixed original dimensions */
+      width: 720px;
+      height: 504px;
 
-  /* Fixed dimensions */
-  width: 720px;
-  height: 504px;
+      transform: translate(-50%, -50%);
+      background-image: url("laurelC.jpg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
 
-  transform: translate(-50%, -50%); /* perfect centering */
+      opacity: 1;
+      z-index: 0;
+      pointer-events: none;
 
-  background-image: url("laurelC.jpg");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+      /* Firefox fix */
+      display: block;
+      min-width: 1px;
+      min-height: 1px;
+    }
 
-  z-index: 0;
-  opacity: 1;
-  
-  /* transition: opacity 4000ms ease; */ removed transition
-  pointer-events: none;
-}
-
-    /* faded/hidden state (used after loading a page) */
     .cover-photo.hidden {
       opacity: 0;
     }
 
-    /* IFRAME — hidden initially, shown when a page is loaded */
+    /* IFRAME */
     iframe#viewer {
       position: relative;
       z-index: 1;
       width: 100%;
       height: 100%;
       border: none;
-      background: transparent; /* let iframe document control its own background */
-      display: none; /* hide while no src is set */
+      background: transparent;
+      display: none; /* starts hidden */
     }
-/* ----------- MOBILE FIX ----------- */
-@media (max-width: 768px) {
 
-  body {
-    flex-direction: column;    /* left panel on top, content below */
-    height: auto;
-    overflow: auto;
-  }
 
-  .index-panel {
-    width: 100%;
-    height: auto;
-    box-shadow: none;
-  }
 
-  .main-panel {
-    width: 100%;
-    height: calc(100vh - 300px); /* adjust depending on menu height */
-    position: relative;
-  }
+    /* ----------------------------------------------------------- */
+    /* ----------------------- MOBILE FIX ------------------------ */
+    /* ----------------------------------------------------------- */
+    @media (max-width: 768px) {
 
-  /* Make cover photo responsive */
-  .cover-photo {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 720 / 504;
-    top: 0;
-    left: 0;
-    transform: none;
-    position: relative;
-  }
+      body {
+        flex-direction: column;
+        height: auto;
+        overflow: auto;
+      }
 
-  iframe#viewer {
-    height: 100%;
-  }
-}
+      .index-panel {
+        width: 100%;
+        height: auto;
+        box-shadow: none;
+      }
 
-    
+      .main-panel {
+        width: 100%;
+        height: auto;
+        position: relative;
+        overflow: hidden;
+      }
+
+      /* Responsive cover */
+      .cover-photo {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 720 / 504;
+
+        position: relative;
+        top: 0;
+        left: 0;
+        transform: none;
+      }
+
+      /* Responsive iframe */
+      iframe#viewer {
+        width: 100%;
+        height: calc(100vh - 250px);
+        max-height: 80vh;
+      }
+    }
+
   </style>
 </head>
+
+
 <body>
 
-  <!-- LEFT INDEX PANEL -->
+  <!-- LEFT MENU PANEL -->
   <div class="index-panel">
     <h2>The collections</h2>
+
     <div class="index-item" data-page="enduring.html">Enduring creatures</div>
     <div class="index-item" data-page="ordinary.html">Joy of ordinary</div>
 
     <br><br>
-    <img class="slide bottom-logo" src="koorusbookanNameSmall.png" width="100%" alt="Koorus Bookan" />
+    <img class="slide bottom-logo" src="koorusbookanNameSmall.png" width="100%" alt="Koorus Bookan">
   </div>
 
-  <!-- RIGHT CONTENT PANEL -->
+
+  <!-- RIGHT MAIN CONTENT PANEL -->
   <div class="main-panel">
     <div class="cover-photo" id="cover"></div>
-    <iframe id="viewer" src=""></iframe>
+    <iframe id="viewer"></iframe>
   </div>
+
 
   <script>
     const viewer = document.getElementById('viewer');
     const cover = document.getElementById('cover');
 
-    // Hide iframe initially if it has no src (keeps cover visible)
     function updateVisibility() {
-      if (!viewer.src || viewer.src === window.location.href) { // some browsers set empty src to current URL
+      if (!viewer.src || viewer.src === window.location.href) {
         viewer.style.display = 'none';
         cover.classList.remove('hidden');
       } else {
         viewer.style.display = 'block';
-        // keep cover fading out so iframe content appears above it
         cover.classList.add('hidden');
       }
     }
 
-    // load page and fade cover
     function loadPage(url) {
-      // show iframe element (so it will render once src is set)
       viewer.style.display = 'block';
-      // start fading cover immediately for a smoother transition
       cover.classList.add('hidden');
-      // set src (this triggers load in iframe)
       viewer.src = url;
     }
 
-    // wire up clicks
     document.querySelectorAll('.index-item').forEach(item => {
       item.addEventListener('click', () => {
-        const page = item.dataset.page;
-        if (!page) return;
-        loadPage(page);
+        if (item.dataset.page) loadPage(item.dataset.page);
       });
     });
 
-    // when iframe finishes loading, ensure cover stays hidden and iframe visible
     viewer.addEventListener('load', () => {
       viewer.style.display = 'block';
       cover.classList.add('hidden');
     });
 
-    // initialize
     document.addEventListener('DOMContentLoaded', updateVisibility);
-    // in case the page is loaded with an explicit src already set
-    updateVisibility();
   </script>
 
 </body>
