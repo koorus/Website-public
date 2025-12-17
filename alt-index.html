@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Koorus Bookan</title>
+
+  <style>
+    body {
+      margin: 0;
+      background: #808080;
+      font-family: Arial, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* ======================
+       PAGE LAYOUT
+       ====================== */
+    .layout {
+      width: 90vw;
+      max-width: 1400px;
+      height: 85vh;
+      display: flex;
+      gap: 20px;
+    }
+
+    /* ======================
+       LEFT INDEX
+       ====================== */
+    .index {
+      width: 240px;
+      background: #c0c0c0;
+      padding: 20px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .index h1 {
+      margin: 0 0 20px 0;
+      font-size: 18px;
+      font-weight: normal;
+      color: #222;
+    }
+
+    .nav {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .nav a {
+      text-decoration: none;
+      color: #222;
+      font-size: 15px;
+      padding: 6px 4px;
+      transition: color 0.2s;
+    }
+
+    .nav a:hover {
+      color: #000;
+      text-decoration: underline;
+    }
+
+    .footer {
+      font-size: 12px;
+      color: #444;
+    }
+
+    /* ======================
+       COVER IMAGE
+       ====================== */
+    .cover {
+      flex: 1;
+      background: #c0c0c0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .cover img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      border-radius: 6px;
+      box-shadow: 12px 12px 28px rgba(0, 0, 0, 0.45);
+    }
+
+    /* ======================
+       MOBILE BEHAVIOR
+       ====================== */
+    @media (max-width: 768px) {
+      .layout {
+        flex-direction: column;
+        height: auto;
+      }
+
+      .index {
+        width: 100%;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .nav {
+        flex-direction: row;
+        gap: 16px;
+      }
+
+      .cover {
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="layout">
+
+    <!-- LEFT INDEX -->
+    <aside class="index">
+      <div>
+        <h1>Koorus Bookan</h1>
+
+        <nav class="nav">
+          <a href="enduring2.html">Enduring creatures</a>
+          <a href="archive.html">Archive</a>
+          <a href="about.html">About</a>
+        </nav>
+      </div>
+
+      <div class="footer">
+        © 2025
+      </div>
+    </aside>
+
+    <!-- COVER IMAGE -->
+    <main class="cover">
+      <img src="Oct2023-F33-Elora_138.jpg" alt="Cover image" />
+    </main>
+
+  </div>
+
+</body>
+</html>
