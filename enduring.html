@@ -91,18 +91,27 @@
       .grid {
         grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
       }
-      /* ======================
-   BACK BUTTON
+    /* ======================
+   FIXED BACK ICON
    ====================== */
 .back-btn {
-  align-self: flex-start;
-  padding: 6px 14px;
-  font-size: 14px;
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
   background: #bfbfbf;
   border: none;
-  border-radius: 6px;
   cursor: pointer;
-  box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.3);
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.35);
+  z-index: 1000;
   transition: background 0.2s ease, transform 0.15s ease;
 }
 
@@ -114,6 +123,7 @@
 .back-btn:active {
   transform: translateY(0);
 }
+
 
     }
   </style>
