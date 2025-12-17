@@ -28,7 +28,7 @@
        REVIEW / PREVIEW AREA
        ====================== */
     .preview {
-      background: #c0c0c0;
+      background: #;808080
       border-radius: 8px;
       padding: 12px;
       display: flex;
@@ -109,4 +109,32 @@
       <div class="thumb active"><img src="Oct2023-F33-Elora_138.jpg" /></div>
       <div class="thumb"><img src="2021-d850_D851921.jpg" /></div>
       <div class="thumb"><img src="fw2023_D705043.jpg" /></div>
-      <div class="thumb"><img src="O
+      <div class="thumb"><img src="Oct2022-BW-F31gorge-laurel_93.jpg" /></div>
+      <div class="thumb"><img src="FW2024_D853644.jpg" /></div>
+      <div class="thumb"><img src="FW2024_D853646.jpg" /></div>
+      <div class="thumb"><img src="F2018-2_DSC0243.jpg" /></div>
+      <div class="thumb"><img src="WS2021_D703509.jpg" /></div>
+      <div class="thumb"><img src="Dec2022-F37Fall-waterloo_201.jpg" /></div>
+      <div class="thumb"><img src="mar2022badlands5.jpg" /></div>
+      <div class="thumb"><img src="F62-F2025Untitled-6.jpg" /></div>
+      <div class="thumb"><img src="F42-F2023Untitled-8.jpg" /></div>
+      <div class="thumb"><img src="F62-F2025Untitled-4.jpg" /></div>
+    </div>
+
+  </div>
+
+  <script>
+    const preview = document.getElementById('previewImage');
+    const thumbs = document.querySelectorAll('.thumb');
+
+    thumbs.forEach(thumb => {
+      thumb.addEventListener('click', () => {
+        thumbs.forEach(t => t.classList.remove('active'));
+        thumb.classList.add('active');
+        preview.src = thumb.querySelector('img').src;
+      });
+    });
+  </script>
+
+</body>
+</html>
