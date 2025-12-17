@@ -91,11 +91,48 @@
       .grid {
         grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
       }
+      /* ======================
+   BACK BUTTON
+   ====================== */
+.back-btn {
+  align-self: flex-start;
+  padding: 6px 14px;
+  font-size: 14px;
+  background: #bfbfbf;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.3);
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.back-btn:hover {
+  background: #a9a9a9;
+  transform: translateY(-1px);
+}
+
+.back-btn:active {
+  transform: translateY(0);
+}
+
     }
   </style>
 </head>
 
 <body>
+<div class="page">
+
+  <button class="back-btn" onclick="history.back()">← Back</button>
+
+  <div class="preview">
+    <img id="previewImage" src="Oct2023-F33-Elora_138.jpg" alt="Preview" />
+  </div>
+
+  <div class="grid">
+    ...
+  </div>
+
+</div>
 
   <div class="page">
 
