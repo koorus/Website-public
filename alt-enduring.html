@@ -24,54 +24,46 @@
       gap: 18px;
     }
 
-    /* ======================
-   FIXED BACK ICON
-   ====================== */
-.back-btn {
-  position: fixed;
-  top: 16px;
-  left: 16px;
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  background: #bfbfbf;
-  border: none;
-  cursor: pointer;
-  font-size: 20px;
-  font-weight: bold;
-  line-height: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.35);
-  z-index: 1000;
-  transition: background 0.2s ease, transform 0.15s ease;
-}
+    /* Back button */
+    .back-btn {
+      position: fixed;
+      top: 16px;
+      left: 16px;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: rgba(191, 191, 191, 0.5);
+      backdrop-filter: blur(4px);
+      border: none;
+      cursor: pointer;
+      font-size: 20px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.35);
+      z-index: 1000;
+      transition: background 0.2s ease, transform 0.15s ease;
+    }
 
-.back-btn:hover {
-  background: #a9a9a9;
-  transform: translateY(-1px);
-}
+    .back-btn:hover {
+      background: #a9a9a9;
+      transform: translateY(-1px);
+    }
 
-.back-btn:active {
-  transform: translateY(0);
-}
+    .back-btn:active {
+      transform: translateY(0);
+    }
 
-
-    /* end back button*/
-    
-    /* ======================
-       REVIEW / PREVIEW AREA
-       ====================== */
+    /* Preview */
     .preview {
       background: #d3d3d3;
       border-radius: 8px;
       padding: 12px;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
       max-height: 70vh;
-      /* shadow removed */
     }
 
     .preview img {
@@ -80,50 +72,40 @@
       object-fit: contain;
       border-radius: 6px;
       box-shadow: 10px 10px 25px rgba(0, 0, 0, 0.45);
-<div class="preview">
-  <img id="previewImage" src="Oct2023-F33-Elora_138.jpg" alt="Preview" />
-
-  <div class="nav-buttons">
-    <button id="prevBtn">⟵ Previous</button>
-    <button id="nextBtn">Next ⟶</button>
-  </div>
-</div>
-      
     }
 
-.nav-buttons {
-  margin-top: 12px;
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  max-width: 400px;
-}
+    /* Navigation buttons */
+    .nav-buttons {
+      margin-top: 12px;
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 400px;
+    }
 
-.nav-buttons button {
-  flex: 1;
-  padding: 10px;
-  margin: 0 6px;
-  border: none;
-  border-radius: 6px;
-  background: #bfbfbf;
-  cursor: pointer;
-  font-weight: bold;
-  box-shadow: 4px 4px 10px rgba(0,0,0,0.25);
-  transition: background 0.2s ease, transform 0.15s ease;
-}
+    .nav-buttons button {
+      flex: 1;
+      padding: 10px;
+      margin: 0 6px;
+      border: none;
+      border-radius: 6px;
+      background: #bfbfbf;
+      cursor: pointer;
+      font-weight: bold;
+      box-shadow: 4px 4px 10px rgba(0,0,0,0.25);
+      transition: background 0.2s ease, transform 0.15s ease;
+    }
 
-.nav-buttons button:hover {
-  background: #a9a9a9;
-  transform: translateY(-1px);
-}
+    .nav-buttons button:hover {
+      background: #a9a9a9;
+      transform: translateY(-1px);
+    }
 
-.nav-buttons button:active {
-  transform: translateY(0);
-}
-      
-    /* ======================
-       GRID THUMBNAILS
-       ====================== */
+    .nav-buttons button:active {
+      transform: translateY(0);
+    }
+
+    /* Grid */
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
@@ -155,69 +137,63 @@
       outline: 2px solid #333;
     }
 
-    /* ======================
-       MOBILE TWEAKS
-       ====================== */
     @media (max-width: 600px) {
-  .back-btn {
-    width: 36px;
-    height: 36px;
-    font-size: 18px;
-  }
-}
-
-    .back-btn {
-  background: rgba(191, 191, 191, 0.50);
-  backdrop-filter: blur(4px);
-}
-
+      .back-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 18px;
+      }
     }
   </style>
 </head>
 
 <body>
-<button class="back-btn" onclick="history.back()" aria-label="Go back">
-  &#8592;
-</button>
 
-  <div class="page">
+<button class="back-btn" onclick="history.back()">&#8592;</button>
 
-    <!-- Preview Area -->
-    <div class="preview">
-      <img id="previewImage" src="Oct2023-F33-Elora_138.jpg" alt="Preview" />
+<div class="page">
+
+  <!-- Preview -->
+  <div class="preview">
+    <img id="previewImage" src="Oct2023-F33-Elora_138.jpg" alt="Preview" />
+
+    <div class="nav-buttons">
+      <button id="prevBtn">⟵ Previous</button>
+      <button id="nextBtn">Next ⟶</button>
     </div>
-
-    <!-- Thumbnail Grid -->
-    <div class="grid">
-      <div class="thumb active"><img src="Oct2023-F33-Elora_138.jpg" /></div>
-      <div class="thumb"><img src="2021-d850_D851921.jpg" /></div>
-      <div class="thumb"><img src="fw2023_D705043.jpg" /></div>
-      <div class="thumb"><img src="Oct2022-BW-F31gorge-laurel_93.jpg" /></div>
-      <div class="thumb"><img src="FW2024_D853644.jpg" /></div>
-      <div class="thumb"><img src="FW2024_D853646.jpg" /></div>
-      <div class="thumb"><img src="F2018-2_DSC0243.jpg" /></div>
-      <div class="thumb"><img src="WS2021_D703509.jpg" /></div>
-      <div class="thumb"><img src="Dec2022-F37Fall-waterloo_201.jpg" /></div>
-      <div class="thumb"><img src="mar2022badlands5.jpg" /></div>
-      <div class="thumb"><img src="F62-F2025Untitled-6.jpg" /></div>
-      <div class="thumb"><img src="F42-F2023Untitled-8.jpg" /></div>
-      <div class="thumb"><img src="F62-F2025Untitled-4.jpg" /></div>
-      <div class="thumb"><img src="2020_D851284.jpg" /></div>
-      <div class="thumb"><img src="w2024_D853682.jpg" /></div>
-      <div class="thumb"><img src="d850_D853618.jpg" /></div>
-      <div class="thumb"><img src="d850_D853623.jpg" /></div>
-      <div class="thumb"><img src="WS2020-djiDJI_0701.jpg" /></div>
-      <div class="thumb"><img src="FW2024_D853720.jpg" /></div>
-      <div class="thumb"><img src="F62-F2025Untitled-9.jpg" /></div>
-      <div class="thumb"><img src="WS2020-djiDJI_0527.jpg" /></div>
-      <div class="thumb"><img src="WS2023-d850_D853590.jpg" /></div>
-      <div class="thumb"><img src="WS2021_DSC2423.jpg" /></div>
-      <div class="thumb"><img src="F2019-d850_D851100.jpg" /></div>
-    </div>
-
   </div>
 
-  <script>
+  <!-- Thumbnails -->
+  <div class="grid">
+    <div class="thumb active"><img src="Oct2023-F33-Elora_138.jpg" /></div>
+    <div class="thumb"><img src="2021-d850_D851921.jpg" /></div>
+    <div class="thumb"><img src="fw2023_D705043.jpg" /></div>
+    <div class="thumb"><img src="Oct2022-BW-F31gorge-laurel_93.jpg" /></div>
+    <div class="thumb"><img src="FW2024_D853644.jpg" /></div>
+    <div class="thumb"><img src="FW2024_D853646.jpg" /></div>
+    <div class="thumb"><img src="F2018-2_DSC0243.jpg" /></div>
+    <div class="thumb"><img src="WS2021_D703509.jpg" /></div>
+    <div class="thumb"><img src="Dec2022-F37Fall-waterloo_201.jpg" /></div>
+    <div class="thumb"><img src="mar2022badlands5.jpg" /></div>
+    <div class="thumb"><img src="F62-F2025Untitled-6.jpg" /></div>
+    <div class="thumb"><img src="F42-F2023Untitled-8.jpg" /></div>
+    <div class="thumb"><img src="F62-F2025Untitled-4.jpg" /></div>
+    <div class="thumb"><img src="2020_D851284.jpg" /></div>
+    <div class="thumb"><img src="w2024_D853682.jpg" /></div>
+    <div class="thumb"><img src="d850_D853618.jpg" /></div>
+    <div class="thumb"><img src="d850_D853623.jpg" /></div>
+    <div class="thumb"><img src="WS2020-djiDJI_0701.jpg" /></div>
+    <div class="thumb"><img src="FW2024_D853720.jpg" /></div>
+    <div class="thumb"><img src="F62-F2025Untitled-9.jpg" /></div>
+    <div class="thumb"><img src="WS2020-djiDJI_0527.jpg" /></div>
+    <div class="thumb"><img src="WS2023-d850_D853590.jpg" /></div>
+    <div class="thumb"><img src="WS2021_DSC2423.jpg" /></div>
+    <div class="thumb"><img src="F2019-d850_D851100.jpg" /></div>
+  </div>
+
+</div>
+
+<script>
   const preview = document.getElementById('previewImage');
   const thumbs = Array.from(document.querySelectorAll('.thumb'));
   const prevBtn = document.getElementById('prevBtn');
@@ -234,14 +210,12 @@
     preview.src = thumbs[currentIndex].querySelector('img').src;
   }
 
-  // Thumbnail click
   thumbs.forEach((thumb, index) => {
     thumb.addEventListener('click', () => {
       updatePreview(index);
     });
   });
 
-  // Buttons
   prevBtn.addEventListener('click', () => {
     updatePreview(currentIndex - 1);
   });
@@ -250,7 +224,6 @@
     updatePreview(currentIndex + 1);
   });
 
-  // Optional: keyboard navigation
   document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') updatePreview(currentIndex - 1);
     if (e.key === 'ArrowRight') updatePreview(currentIndex + 1);
