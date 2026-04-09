@@ -80,8 +80,47 @@
       object-fit: contain;
       border-radius: 6px;
       box-shadow: 10px 10px 25px rgba(0, 0, 0, 0.45);
+<div class="preview">
+  <img id="previewImage" src="Oct2023-F33-Elora_138.jpg" alt="Preview" />
+
+  <div class="nav-buttons">
+    <button id="prevBtn">⟵ Previous</button>
+    <button id="nextBtn">Next ⟶</button>
+  </div>
+</div>
+      
     }
 
+.nav-buttons {
+  margin-top: 12px;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 400px;
+}
+
+.nav-buttons button {
+  flex: 1;
+  padding: 10px;
+  margin: 0 6px;
+  border: none;
+  border-radius: 6px;
+  background: #bfbfbf;
+  cursor: pointer;
+  font-weight: bold;
+  box-shadow: 4px 4px 10px rgba(0,0,0,0.25);
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.nav-buttons button:hover {
+  background: #a9a9a9;
+  transform: translateY(-1px);
+}
+
+.nav-buttons button:active {
+  transform: translateY(0);
+}
+      
     /* ======================
        GRID THUMBNAILS
        ====================== */
@@ -179,17 +218,44 @@
   </div>
 
   <script>
-    const preview = document.getElementById('previewImage');
-    const thumbs = document.querySelectorAll('.thumb');
+  const preview = document.getElementById('previewImage');
+  const thumbs = Array.from(document.querySelectorAll('.thumb'));
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
 
-    thumbs.forEach(thumb => {
-      thumb.addEventListener('click', () => {
-        thumbs.forEach(t => t.classList.remove('active'));
-        thumb.classList.add('active');
-        preview.src = thumb.querySelector('img').src;
-      });
+  let currentIndex = 0;
+
+  function updatePreview(index) {
+    currentIndex = (index + thumbs.length) % thumbs.length;
+
+    thumbs.forEach(t => t.classList.remove('active'));
+    thumbs[currentIndex].classList.add('active');
+
+    preview.src = thumbs[currentIndex].querySelector('img').src;
+  }
+
+  // Thumbnail click
+  thumbs.forEach((thumb, index) => {
+    thumb.addEventListener('click', () => {
+      updatePreview(index);
     });
-  </script>
+  });
+
+  // Buttons
+  prevBtn.addEventListener('click', () => {
+    updatePreview(currentIndex - 1);
+  });
+
+  nextBtn.addEventListener('click', () => {
+    updatePreview(currentIndex + 1);
+  });
+
+  // Optional: keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') updatePreview(currentIndex - 1);
+    if (e.key === 'ArrowRight') updatePreview(currentIndex + 1);
+  });
+</script>
 
 </body>
 </html>
