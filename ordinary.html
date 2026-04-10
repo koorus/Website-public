@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ordinary</title>
+
+  <style>
+    body {
+      margin: 0;
+      background: #d3d3d3;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .page {
+      width: 90vw;
+      max-width: 1200px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    
+
+    /* Back button */
+    .back-btn {
+      position: fixed;
+      top: 260px;
+      left: 4px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(120, 120, 161, 0.4);
+      backdrop-filter: blur(4px);
+      border: none;
+      cursor: pointer;
+      font-size: 20px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.35);
+      z-index: 1000;
+      transition: background 0.2s ease, transform 0.15s ease;
+    }
+
+    .back-btn:hover {
+      background: #a9a9a9;
+      transform: translateY(-1px);
+    }
+
+    .back-btn:active {
+      transform: translateY(0);
+    }
+
+    /* Preview */
+    .preview {
+      background: #d3d3d3;
+      border-radius: 8px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-height: 70vh;
+    }
+
+    .preview img {
+      max-width: 100%;
+      max-height: 65vh;
+      object-fit: contain;
+      border-radius: 6px;
+      box-shadow: 10px 10px 25px rgba(0, 0, 0, 0.45);
+    }
+
+    /* Navigation buttons */
+    .nav-buttons {
+      margin-top: 8px;
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .nav-buttons button {
+      flex: 1;
+      padding: 5px;
+      margin: 0 6px;
+      border: none;
+      border-radius: 6px;
+      background: #bfbfbf;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-weight: bold;
+      box-shadow: 4px 4px 10px rgba(0,0,0,0.25);
+      transition: background 0.2s ease, transform 0.15s ease;
+    }
+
+    .nav-buttons button:hover {
+      background: #a9a9a9;
+      transform: translateY(-1px);
+    }
+
+    .nav-buttons button:active {
+      transform: translateY(0);
+    }
+
+    /* Grid */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+      gap: 10px;
+    }
+
+    .thumb {
+      background: #e6e6e6;
+      border-radius: 6px;
+      overflow: hidden;
+      cursor: pointer;
+      box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .thumb:hover {
+      transform: scale(1.04);
+      box-shadow: 6px 6px 14px rgba(0, 0, 0, 0.35);
+    }
+
+    .thumb.active {
+      outline: 2px solid #333;
+    }
+
+    @media (max-width: 600px) {
+      .back-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="page">
+
+<!--  <button class="back-btn" onclick="history.back()">&#8592;</button> -->
+  <!-- Preview -->
+  <div class="preview">
+    <img id="previewImage" src="S2022-Aug-2022_D853267.jpg" alt="Preview" />
+    <div class="nav-buttons">
+      <button class="nav-buttons" onclick="history.back()">  <<</button>
+      <button id="prevBtn"><</button>
+      <button id="nextBtn">></button>
+    </div>
+  </div>
+
+  <!-- Thumbnails -->
+  <div class="grid">
+    <div class="thumb active"><img src="S2022-Aug-2022_D853267.jpg" /></div>
+      <div class="thumb"><img src="D700_D705127.jpg" /></div>
+      <div class="thumb"><img src="F49-F2025_D854068.jpg" /></div>
+      <div class="thumb"><img src="F53-F2025_D854238.jpg" /></div>
+      <div class="thumb"><img src="F53-F2025_D854268.jpg" /></div>
+      <div class="thumb"><img src="F57-2025_D854384.jpg" /></div>
+      <div class="thumb"><img src="F57-2025_D854391.jpg" /></div>
+      <div class="thumb"><img src="F57-2025_D854393.jpg" /></div>
+      <div class="thumb"><img src="S2025-D700_D705116.jpg" /></div>
+      <div class="thumb"><img src="S2025_D705132.jpg" /></div>
+      <div class="thumb"><img src="mar2022backyard1.jpg" /></div>
+      <div class="thumb"><img src="Nov2022-F36Fall-waterloo_222.jpg" /></div>
+      <div class="thumb"><img src="Nov2022-F36Fall-waterloo_223.jpg" /></div>
+      <div class="thumb"><img src="2019-09-07_D851062.jpg" /></div>
+      <div class="thumb"><img src="WF2021_D703710.jpg" /></div>
+      <div class="thumb"><img src="WF2021_D703762.jpg" /></div>
+      <div class="thumb"><img src="WF2021_D704094.jpg" /></div>
+      <div class="thumb"><img src="WF2021_D704498.jpg" /></div>
+      <div class="thumb"><img src="W2022-gx8_1070699.jpg" /></div>
+      <div class="thumb"><img src="2020_D851263.jpg" /></div>
+      <div class="thumb"><img src="WF2021_D704593.jpg" /></div>
+      <div class="thumb"><img src="WF2021_D704355.jpg" /></div>
+      <div class="thumb"><img src="W2021_D704691.jpg" /></div>
+      <div class="thumb"><img src="w2024_D853804.jpg" /></div>
+      <div class="thumb"><img src="Aug2022-F26Untitled_29.jpg" /></div>
+      <div class="thumb"><img src="Aug2022-F26Untitled_32.jpg" /></div>
+      <div class="thumb"><img src="F42-F2023Untitled-2.jpg" /></div>
+      <div class="thumb"><img src="fw2023_D705056.jpg" /></div>
+      <div class="thumb"><img src="F63-F2025_D854550.jpg" /></div>
+      <div class="thumb"><img src="2018-21-d700_D703340.jpg" /></div>
+      <div class="thumb"><img src="WS2020-djiDJI_0608.jpg" /></div>
+      <div class="thumb"><img src="s2022-d850_D853143.jpg" /></div>
+      <div class="thumb"><img src="W2020-djiDJI_0413.jpg" /></div>
+      <div class="thumb"><img src="Untitled_44.jpg" /></div>
+      <div class="thumb"><img src="S1987_D854141.jpg" /></div>
+      <div class="thumb"><img src="W2022BW_D853066.jpg" /></div>
+  </div>
+ <h5>Koorus Bookan © 2026</h5>
+</div>
+
+<script>
+  const preview = document.getElementById('previewImage');
+  const thumbs = Array.from(document.querySelectorAll('.thumb'));
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+
+  let currentIndex = 0;
+
+  function updatePreview(index) {
+    currentIndex = (index + thumbs.length) % thumbs.length;
+
+    thumbs.forEach(t => t.classList.remove('active'));
+    thumbs[currentIndex].classList.add('active');
+
+    preview.src = thumbs[currentIndex].querySelector('img').src;
+  }
+
+  thumbs.forEach((thumb, index) => {
+    thumb.addEventListener('click', () => {
+      updatePreview(index);
+    });
+  });
+
+  prevBtn.addEventListener('click', () => {
+    updatePreview(currentIndex - 1);
+  });
+
+  nextBtn.addEventListener('click', () => {
+    updatePreview(currentIndex + 1);
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') updatePreview(currentIndex - 1);
+    if (e.key === 'ArrowRight') updatePreview(currentIndex + 1);
+  });
+</script>
+
+            
+</body>
+</html>
