@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Day Counter</title>
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #d8b4fe, #93c5fd);
+    }
+
+    .counter-box {
+      background: white;
+      padding: 40px;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+
+    h1 {
+      margin-bottom: 10px;
+      font-size: 2rem;
+    }
+
+    #countdown {
+      font-size: 3rem;
+      font-weight: bold;
+      color: #7c3aed;
+    }
+
+    p {
+      margin-top: 10px;
+      color: #555;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="counter-box">
+    <h1>Days Until Event</h1>
+    <div id="countdown">0</div>
+    <p id="target-date"></p>
+  </div>
+
+  <script>
+    // Set your target date here
+    const targetDate = new Date("2026-12-31");
+
+    // Show the target date
+    document.getElementById("target-date").innerHTML =
+      "Target Date: " + targetDate.toDateString();
+
+    function updateCounter() {
+      const today = new Date();
+
+      // Difference in milliseconds
+      const difference = targetDate - today;
+
+      // Convert to days
+      const daysLeft = Math.ceil(difference / (1000 * 60 * 60 * 24));
+
+      // Display result
+      if (daysLeft > 0) {
+        document.getElementById("countdown").innerHTML = daysLeft;
+      } else if (daysLeft === 0) {
+        document.getElementById("countdown").innerHTML = "TODAY!";
+      } else {
+        document.getElementById("countdown").innerHTML = "EXPIRED";
+      }
+    }
+
+    // Run immediately
+    updateCounter();
+
+    // Update every hour
+    setInterval(updateCounter, 1000 * 60 * 60);
+  </script>
+
+</body>
+</html>
