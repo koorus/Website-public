@@ -45,7 +45,7 @@
 <body>
 
   <div class="counter-box">
-    <h1>That is the day</h1>
+    <h1>The day could come in</h1>
     <div id="countdown">0</div>
     <p id="target-date"></p>
   </div>
@@ -56,7 +56,7 @@
 
     // Show the target date
     document.getElementById("target-date").innerHTML =
-      "... " + targetDate.toDateString();
+      "days " + targetDate.toDateString();
 
     function updateCounter() {
       const today = new Date();
